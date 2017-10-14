@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-
+const dateFormatSQL = `ALTER SESSION SET NLS_DATE_FORMAT='YYYY-MM-DD';\n`
 const disableConstraintsConfig = [{constraintName: "do_kocurow_szef_bandy", table:'Bandy'},{constraintName: 'do_kocurow_szef', table: 'Kocury'} ]
 const disableConstraintSQL = ( acc, { constraintName, table }) => `${acc}ALTER TABLE ${table} DISABLE CONSTRAINT ${constraintName};\n`
 const disableContraints = disableConstraintsConfig.reduce(disableConstraintSQL,'')
@@ -30,7 +30,7 @@ const schemas = [
 
 const SQLquery = data.map((data, i) => insertIntoValuesSQL(data,schemas[i])).join('\n')
 
-const output = `${disableContraints}\n${insertAllSQL}\n${SQLquery}SELECT * FROM dual;`
+const output = `${dateFormatSQL}${disableContraints}\n${insertAllSQL}\n${SQLquery}SELECT * FROM dual;`
 
 fs.writeFileSync('output.txt', output);
 
