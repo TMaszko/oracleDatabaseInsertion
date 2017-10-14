@@ -30,7 +30,7 @@ const schemas = [
 
 const SQLquery = data.map((data, i) => insertIntoValuesSQL(data,schemas[i])).join('\n')
 
-const output = `${disableContraints}\n${insertAllSQL}\n${SQLquery}`
+const output = `${disableContraints}\n${insertAllSQL}\n${SQLquery}\nSELECT * FROM dual`
 
 fs.writeFileSync('output.txt', output);
 
